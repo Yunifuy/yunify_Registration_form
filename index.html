@@ -116,6 +116,13 @@
             border-radius: 10px;
             
         }
+
+        #next-step-1 {
+            max-width: 200px;
+            height: 50px;
+            
+        }
+        
     </style>
 </head>
 <body>
@@ -181,7 +188,7 @@
                 <label for="managerSignature">Manager Signature</label>
                 <div id="img" class="flex justify-between ">
                     <img  src="manager sing.jpg" alt="Manager Signature" class="signature">
-                    <button id="next-step-1" class="primary-btn" onclick="nextStep(1)">Next: Payment Details</button>
+                    <button id="next-step-1" class="primary-btn" onclick="nextStep(1)">Payment Details</button>
                 </div>
                 
                 <footer>
@@ -218,7 +225,7 @@
                         <p id="code-error" class="text-xs text-red-400 mt-1 hidden">The Unique Code is incorrect. Please contact the administrator.</p>
                     </div>
                 </div>
-                <div class="flex justify-between mt-8">
+                <div id="secondformbtn" class="flex justify-between mt-8">
                     <button id="prev-step-2" class="secondary-btn" onclick="prevStep(2)">&#8592; Back</button>
                     <button id="send-otp-btn" class="primary-btn" onclick="sendOtp()">Validate & Request OTP</button>
                 </div>
