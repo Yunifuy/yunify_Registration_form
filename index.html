@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YUNIFY Registration Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #395c9e, #304c83);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .container-card {
+            max-width: 90%;
+            width: 800px; /* Increased max width for better desktop view */
+            margin: 2rem auto;
+            background: linear-gradient(90deg, #0b40a3, #072760);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(197, 192, 192, 0.896), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .step-indicator {
+            transition: all 0.3s ease;
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: 700;
+            color: white;
+            border: 2px solid #03fcf8;
+            background-color: #304c83;
+        }
+        .active-step {
+            background-color: #ffffff;
+            color: #0b40a3;
+            border-color: #ffffff;
+            box-shadow: 0 0 10px rgba(14, 165, 233, 0.7);
+        }
+        .completed-step {
+            background-color: #05d3ef;
+            color: white;
+            border-color: #f1f5f3;
+        }
+
+        .primary-btn {
+            background-color: #0075f1;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+        .primary-btn:hover:not(:disabled) {
+            background-color: #0a2dc7;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        .primary-btn:disabled {
+            background-color: #a0aec0;
+            cursor: not-allowed;
+        }
+        .secondary-btn {
+            background-color: #4c51bf;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+        .secondary-btn:hover:not(:disabled) {
+            background-color: #3f45a0;
+            transform: translateY(-2px);
+        }
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        input[type="text"], input[type="email"], input[type="tel"], input[type="number"], select {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #bfcce2;
+            color: #1a202c; /* Ensure text is dark and legible */
+            border: 3px solid #00347d;
+            border-radius: 0.75rem; /* Slightly smaller radius for inputs */
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        input:focus, select:focus {
+            border-color: #03e1fa;
+            outline:none;
+            box-shadow: 0 0 0 2px #05d3ef;
+        }
+        
+        #form-steps{
+            transition: opacity 0.3s ease;
+            color: white;
+        }
+        #logo img {
+            max-width: 150px;
+            height: auto;
+            border-radius: 50px;
+            
+        }
+        #img img {
+            max-width: 200px;
+            height: 50px;
+            border-radius: 10px;
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="container-card">
+        <div id="logo" class="flex justify-center mb-6">
+            <img src="logo.jpg" alt=" Compony logo">
+        </div>
+        <h1 class="text-3xl font-bold text-center text-white mb-6">YUNIFY HR & IT SOLUTIONS PVT. LTD.</h1>
+        <p class="text-center text-gray-300 mb-8">Please complete the following steps to register.</p>
+
+        <!-- Status Message Area -->
+        <div id="status-message" class="mb-4 p-3 rounded-lg text-sm font-medium hidden text-center border-l-4"></div>
+
+        <!-- Step Indicators -->
+        <div class="flex justify-center items-center mb-10">
+            <div id="indicator-1" class="step-indicator active-step">1</div>
+            <div class="w-12 h-0.5 bg-gray-300"></div>
+            <div id="indicator-2" class="step-indicator ">2</div>
+            <div class="w-12 h-0.5 bg-gray-300"></div>
+            <div id="indicator-3" class="step-indicator">3</div>
+            <div class="w-12 h-0.5 bg-gray-300"></div>
+            <div id="indicator-4" class="step-indicator">4</div>
+        </div>
+
+        <!-- Form Steps Container -->
+        <div id="form-steps">
+
+            <!-- Step 1: Personal Details -->
+            <div id="step-1" class="step-content">
+                <h2 class="text-2xl font-semibold mb-6 text-white border-b border-gray-700 pb-2">1. Personal & Contact Details</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="input-group">
+                        <label for="name" class="block text-sm font-medium text-gray-300 mb-1">Full Name *</label>
+                        <input type="text" id="name" name="Name" placeholder="Candidate's full name" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="contact" class="block text-sm font-medium text-gray-300 mb-1">Contact Number (10 Digits) *</label>
+                        <!-- Changed to type=text for better pattern enforcement, pattern added for fallback -->
+                        <input type="text" id="contact" name="Contact" placeholder="e.g. 9876543210" required pattern="\d{10}" maxlength="10">
+                    </div>
+                    <div class="input-group">
+                        <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email Address *</label>
+                        <input type="email" id="email" name="Email" placeholder="your.email@example.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="father-name" class="block text-sm font-medium text-gray-300 mb-1">Father's Name *</label>
+                        <input type="text" id="father-name" name="Father Name" placeholder="Father's full name" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="mother-name" class="block text-sm font-medium text-gray-300 mb-1">Mother's Name *</label>
+                        <input type="text" id="mother-name" name="Mother Name" placeholder="Mother's full name" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="aadhar-number" class="block text-sm font-medium text-gray-300 mb-1">Aadhar Number (12 Digits) *</label>
+                        <!-- Changed to type=text for better pattern enforcement -->
+                        <input type="text" id="aadhar-number" name="Aadhar Number" placeholder="12-digit number" required pattern="\d{12}" maxlength="12">
+                    </div>
+                    <div class="input-group md:col-span-2">
+                        <label for="address" class="block text-sm font-medium text-gray-300 mb-1">Full Address *</label>
+                        <input type="text" id="address" name="Address" placeholder="Street, City, State, Pincode" required>
+                    </div>
+                </div>
+                <label for="managerSignature">Manager Signature</label>
+                <div id="img" class="flex justify-between ">
+                    <img  src="manager sing.jpg" alt="Manager Signature" class="signature">
+                    <button id="next-step-1" class="primary-btn" onclick="nextStep(1)">Next: Payment Details</button>
+                </div>
+                
+                <footer>
+            <p class="text-center text-gray-400 text-sm mt-8">"Yunify HR & IT Solutions does not charge any fee from candidates for job placement. We offer job opportunities across various domains, including Banking, Finance, Retail, Marketing, Brand Promotion, BPO, NBFC, Customer Support, IT, and Non-IT sectors. However, if a candidate voluntarily opts for BFSI training provided by Yunify, a fee is non-refundable, as Yunify holds no responsibility for the candidate's performance post-training."</p>
+            
+        </footer>
+            </div>
+
+            <!-- Step 2: Payment Details & Unique Code -->
+            <div id="step-2" class="step-content hidden">
+                <h2 class="text-2xl font-semibold mb-6 text-white border-b border-gray-700 pb-2">2. Payment & Validation</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="input-group">
+                        <label for="training-amount" class="block text-sm font-medium text-gray-300 mb-1">Training Amount (₹) *</label>
+                        <input type="number" id="training-amount" name="Training Amount (₹)" required min="100" placeholder="e.g. 1000">
+                    </div>
+                    <div class="input-group">
+                        <label for="payment-mode" class="block text-sm font-medium text-gray-300 mb-1">Mode of Payment *</label>
+                        <select id="payment-mode" name="Mode of Payment" required>
+                            <option value="">Select Mode</option>
+                            <option value="Online Transfer">Online Transfer (UPI/NEFT)</option>
+                            <option value="Cash">Cash</option>
+                            <option value="Cheque">Cheque</option>
+                        </select>
+                    </div>
+                    <div class="input-group md:col-span-2">
+                        <label for="payment-slip" class="block text-sm font-medium text-gray-300 mb-1">Payment Slip/Proof (URL) *</label>
+                        <input type="text" id="payment-slip" name="Payment Slip Upload (URL)" placeholder="Enter public Google Drive/Imgur link" required>
+                        <p class="text-xs text-gray-400 mt-1">Upload the proof and share the public link here.</p>
+                    </div>
+                    <div class="input-group">
+                        <label for="unique-code" class="block text-sm font-medium text-gray-300 mb-1">Unique Code *</label>
+                        <input type="text" id="unique-code" name="Unique Code" placeholder="Enter the code provided by the admin" required>
+                        <p id="code-error" class="text-xs text-red-400 mt-1 hidden">The Unique Code is incorrect. Please contact the administrator.</p>
+                    </div>
+                </div>
+                <div class="flex justify-between mt-8">
+                    <button id="prev-step-2" class="secondary-btn" onclick="prevStep(2)">&#8592; Back</button>
+                    <button id="send-otp-btn" class="primary-btn" onclick="sendOtp()">Validate & Request OTP</button>
+                </div>
+                <footer>
+                    <p class="text-center text-gray-400 text-sm mt-8 ">NOTE :- "I am not participating in the yunify training of my own free will and have not been forced or coerced in any way to do so. If the questions provided by us are not asked during your interview, the training fee will be refunded".</p>
+                </footer>
+            </div>
+
+            <!-- Step 3: OTP Verification -->
+            <div id="step-3" class="step-content hidden">
+                <h2 class="text-2xl font-semibold mb-6 text-white border-b border-gray-700 pb-2">3. OTP Verification</h2>
+                <div class="text-center p-6 bg-gray-800 rounded-lg mb-6 shadow-inner border border-yellow-700">
+                    <p class="mb-4 text-gray-300">An OTP request has been sent to the admin email. The admin will check and forward the OTP to you.</p>
+                    <p class="text-sm font-mono text-yellow-400">Admin Email: <code>yunifyhritsolutions@gmail.com</code></p>
+                    <p class="text-sm text-gray-400 mt-2">Please enter the OTP below to complete registration.</p>
+                </div>
+                
+                <div class="input-group max-w-sm mx-auto">
+                    <label for="otp-input" class="block text-sm font-medium text-gray-300 mb-1 text-center">Enter 6-Digit OTP *</label>
+                    <input type="number" id="otp-input" required minlength="6" maxlength="6" pattern="\d{6}" title="Must be a 6-digit number" placeholder="e.g. 123456" class="text-center text-2xl tracking-widest">
+                </div>
+                <div class="flex justify-between mt-8">
+                    <button id="prev-step-3" class="secondary-btn" onclick="prevStep(3)">&#8592; Back</button>
+                    <button id="final-submit-btn" class="primary-btn" onclick="finalSubmit()">Complete Registration</button>
+                </div>
+            </div>
+
+            <!-- Step 4: Success Screen -->
+            <div id="step-4" class="step-content hidden">
+                <!-- Final Success Screen -->
+                <div id="success-screen" class="text-center p-10 bg-green-900 border border-green-700 rounded-xl shadow-2xl">
+                    <div class="text-green-400 text-6xl mb-4">
+                        <!-- Icon for success -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-4xl font-bold text-green-400 mb-3">Submission Sent!</h3>
+                    <p class="text-xl text-green-200 mb-6">The server received your request.</p>
+                    <p class="text-sm text-yellow-300 bg-gray-800 p-2 rounded-lg mt-4">
+                        <strong class="text-red-400">Important:</strong> The admin will verify your OTP and payment details. You will receive a confirmation email once your registration is approved.
+                    </p>
+                    <p id="thankMsg ">Thank You for your Trust in Yunify!</p>
+                </div>
+            </div>
+            
+            
+        </div>
+        <footer>
+            
+            <p class="text-center text-gray-400 text-sm ">© 2024 YUNIFY HR & IT SOLUTIONS PVT. LTD. All rights reserved.</p>
+        </footer>
+    </div>
+    
+
+    <script>
+        // --- CONFIGURATION (UPDATE THIS SECTION) ---
+        // IMPORTANT: REPLACE THE URL BELOW WITH YOUR DEPLOYED GOOGLE APPS SCRIPT URL
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzAS4SW-naCrQTmBn0lOdfgEb3YiYrM_-i4lvmYppwInVIN3ZM8KYGlN_QVNGGa-a7c/exec'; 
+        const ADMIN_EMAIL = 'yunifyhritsolutions@gmail.com'; 
+        const CORRECT_UNIQUE_CODE = 'yuni1125'; 
+        // *** UPDATED SPREADSHEET ID FROM YOUR CONTEXT ***
+        const SPREADSHEET_ID = '1ckWiDEFWgvtllAONGDoiySBBRumtCtf5yNXDmqj3foM'; 
+
+        // --- STATE & DOM ELEMENTS ---
+        let currentStep = 1;
+        let candidateData = {};
+
+        const elements = {
+            steps: [
+                null, 
+                document.getElementById('step-1'), 
+                document.getElementById('step-2'), 
+                document.getElementById('step-3'), 
+                document.getElementById('step-4')
+            ],
+            indicators: [
+                null, 
+                document.getElementById('indicator-1'), 
+                document.getElementById('indicator-2'), 
+                document.getElementById('indicator-3'), 
+                document.getElementById('indicator-4')
+            ],
+            statusMessage: document.getElementById('status-message'),
+            sendOtpBtn: document.getElementById('send-otp-btn'),
+            finalSubmitBtn: document.getElementById('final-submit-btn'),
+            otpInput: document.getElementById('otp-input'),
+            codeError: document.getElementById('code-error')
+        };
+
+        // --- UTILITY FUNCTIONS ---
+
+        function showMessage(type, message) {
+            const el = elements.statusMessage;
+            el.textContent = message;
+            el.classList.remove('hidden', 'bg-red-100', 'text-red-800', 'border-red-500', 
+                                         'bg-green-100', 'text-green-800', 'border-green-500',
+                                         'bg-blue-100', 'text-blue-800', 'border-blue-500');
+            
+            switch (type) {
+                case 'success':
+                    el.classList.add('bg-green-100', 'text-green-800', 'border-green-500');
+                    break;
+                case 'error':
+                    el.classList.add('bg-red-100', 'text-red-800', 'border-red-500');
+                    break;
+                case 'info':
+                default:
+                    el.classList.add('bg-blue-100', 'text-blue-800', 'border-blue-500');
+                    break;
+            }
+            el.classList.remove('hidden');
+
+            setTimeout(() => {
+                el.classList.add('hidden');
+            }, 5000);
+        }
+
+        function toggleLoading(btn, isLoading, originalText) {
+            btn.disabled = isLoading;
+            btn.textContent = isLoading ? 'Processing...' : originalText;
+        }
+
+        /**
+         * Collects form data and performs stronger validation specific to the step.
+         */
+        function collectStepData(stepNum) {
+            const stepEl = elements.steps[stepNum];
+            const inputs = stepEl.querySelectorAll('input[required], select[required]');
+            let data = {};
+            let isValid = true;
+            let firstInvalid = null;
+
+            inputs.forEach(input => {
+                input.style.borderColor = '#00347d'; // Reset border
+
+                if (!input.value.trim() || !input.checkValidity()) {
+                    input.style.borderColor = '#e53e3e';
+                    isValid = false;
+                    if (!firstInvalid) firstInvalid = input;
+                } else {
+                    // Specific length checks for number fields
+                    if (input.id === 'aadhar-number' && input.value.trim().length !== 12) {
+                        input.style.borderColor = '#e53e3e';
+                        isValid = false;
+                        if (!firstInvalid) firstInvalid = input;
+                        showMessage('error', 'Aadhar Number must be exactly 12 digits.');
+                        return;
+                    }
+                    if (input.id === 'contact' && input.value.trim().length !== 10) {
+                        input.style.borderColor = '#e53e3e';
+                        isValid = false;
+                        if (!firstInvalid) firstInvalid = input;
+                        showMessage('error', 'Contact Number must be exactly 10 digits.');
+                        return;
+                    }
+
+                    data[input.name] = input.value.trim();
+                }
+            });
+
+            // Focus on the first invalid field
+            if (!isValid && firstInvalid) {
+                firstInvalid.focus();
+            }
+
+            return { data, isValid };
+        }
+
+        /**
+         * Hides all steps and shows the current one, updating indicators.
+         */
+        function updateStepUI(newStep) {
+            // Hide all steps
+            elements.steps.forEach((step, index) => {
+                if (index > 0) step.classList.add('hidden');
+            });
+            // Reset success screen
+            if (newStep !== 4) elements.steps[4].classList.add('hidden');
+
+            // Reset all indicators
+            elements.indicators.forEach((indicator, index) => {
+                if (index > 0) {
+                    indicator.classList.remove('active-step', 'completed-step');
+                    indicator.classList.add('text-gray-700');
+                }
+            });
+
+            // Show the current step
+            if (elements.steps[newStep]) {
+                elements.steps[newStep].classList.remove('hidden');
+            }
+
+            // Update indicators up to the current step
+            for (let i = 1; i <= newStep; i++) {
+                if (elements.indicators[i]) {
+                    if (i < newStep) {
+                        elements.indicators[i].classList.add('completed-step');
+                    } else {
+                        elements.indicators[i].classList.add('active-step');
+                    }
+                }
+            }
+            currentStep = newStep;
+        }
+
+        // --- STEP NAVIGATION ---
+
+        function nextStep(stepNum) {
+            const { data, isValid } = collectStepData(stepNum);
+            
+            if (isValid) {
+                candidateData = { ...candidateData, ...data };
+                updateStepUI(stepNum + 1);
+            } else if (currentStep === 1) {
+                showMessage('error', 'Please ensure all fields in Step 1 are filled correctly (especially 10-digit contact and 12-digit Aadhar).');
+            }
+        }
+
+        function prevStep(stepNum) {
+            updateStepUI(stepNum - 1);
+        }
+
+        // --- API INTERACTION FUNCTIONS ---
+
+        /**
+         * Validates Unique Code, then sends request to Apps Script to generate OTP and email admin.
+         */
+        async function sendOtp() {
+            if (WEB_APP_URL === 'YOUR_WEB_APP_URL_HERE') {
+                showMessage('error', 'Error: Please update WEB_APP_URL in the JavaScript config.');
+                return;
+            }
+
+            const { data, isValid } = collectStepData(2);
+            if (!isValid) {
+                showMessage('error', 'Please fill in all required fields in Step 2.');
+                return;
+            }
+            
+            elements.codeError.classList.add('hidden');
+            if (data['Unique Code'] !== CORRECT_UNIQUE_CODE) {
+                elements.codeError.classList.remove('hidden');
+                showMessage('error', 'Validation Failed: The Unique Code is incorrect.');
+                return;
+            }
+
+            // Store Step 2 data
+            candidateData = { ...candidateData, ...data };
+            
+            const btn = elements.sendOtpBtn;
+            const originalText = btn.textContent;
+            toggleLoading(btn, true, originalText);
+
+            try {
+                // Using 'no-cors' mode as required for embedded iframes to talk to Apps Script
+                const response = await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', 
+                    body: JSON.stringify({
+                        action: 'sendOtp',
+                        email: candidateData.Email,
+                        adminEmail: ADMIN_EMAIL,
+                        name: candidateData.Name
+                    })
+                });
+
+                // Since response cannot be read (due to no-cors), we assume network success
+                // and proceed. The actual success confirmation relies on the admin receiving the email.
+                showMessage('info', 'OTP request sent to the server successfully. Admin will share the OTP with you.');
+                updateStepUI(3);
+
+            } catch (error) {
+                console.error('API Error during sendOtp:', error);
+                showMessage('error', 'A critical network error occurred. Could not reach the server.');
+            } finally {
+                toggleLoading(btn, false, originalText);
+            }
+        }
+
+        /**
+         * Sends OTP and all collected data to Apps Script for verification and final saving.
+         */
+        async function finalSubmit() {
+            if (WEB_APP_URL === 'YOUR_WEB_APP_URL_HERE') {
+                showMessage('error', 'Error: Please update WEB_APP_URL in the JavaScript config.');
+                return;
+            }
+            
+            const otp = elements.otpInput.value.trim();
+            if (otp.length !== 6 || isNaN(otp)) {
+                showMessage('error', 'Please enter a valid 6-digit OTP.');
+                return;
+            }
+
+            const btn = elements.finalSubmitBtn;
+            const originalText = btn.textContent;
+            toggleLoading(btn, true, originalText);
+
+            try {
+                
+                const finalPayload = {
+                    action: 'finalSubmit',
+                    otp: otp,
+                    email: candidateData.Email,
+                    data: candidateData,
+                    spreadsheetId: SPREADSHEET_ID
+                };
+                
+                // Using 'no-cors' mode
+                const response = await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', 
+                    body: JSON.stringify(finalPayload)
+                });
+                
+                // Show success screen assuming network success.
+                showMessage('success', 'Submission request sent. The server is verifying the OTP and saving data now...');
+                
+                // Move to final success screen
+                setTimeout(() => {
+                    updateStepUI(4);
+                    // The success message is now in the step 4 content
+                }, 2000);
+
+
+            } catch (error) {
+                console.error('API Error during finalSubmit:', error);
+                showMessage('error', 'Submission failed due to a critical network error. Check console for details.');
+            } finally {
+                toggleLoading(btn, false, originalText);
+            }
+        }
+
+        // --- INITIALIZATION ---
+
+        window.onload = () => {
+            updateStepUI(1);
+        };
+    </script>
+</body>
+</html>
